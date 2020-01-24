@@ -1,4 +1,4 @@
-const SHA256 = require('crypto-js');
+const SHA256 = require('crypto-js/sha256');
 
 
 class Block {
@@ -28,3 +28,5 @@ class Block {
         console.log("Block mined: " + this.hash);
     }
 }
+
+module.exports.Block = Block;
