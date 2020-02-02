@@ -1,11 +1,11 @@
 
 class Transaction {
 
-    constructor(fromAddress, toAdress, amount)
+    constructor(fromAddress, toAddress, amount)
     {
         this.amount = amount;
         this.fromAddress = fromAddress;
-        this.toAdress = toAdress;
+        this.toAddress = toAddress;
     }
 }
 
