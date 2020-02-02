@@ -43,8 +43,14 @@ class Blockchain {
         ];
     }
 
-    createTransaction(transaction)
+    addTransaction(transaction)
     {
+        if(!transaction.fromAddress || !transaction.toAddress)
+            throw new Error('Tansaction must iclude from and to address');
+        
+        if(!transaction.isValide)
+            throw new Error('Cannot add invalide transaction to chain');
+
         this.pendingTransactions.push(transaction);
     }
 
@@ -79,6 +85,8 @@ class Blockchain {
             const currentBlock = this.chain[i];
             const previousBlock = this.chain[i - 1];
 
+            if(!currentBlock.hasValideTransactions())
+                return false;
             if(currentBlock.hash !== currentBlock.calculateHash())
                 return false;
             
@@ -92,26 +100,3 @@ class Blockchain {
 }
 
 module.exports.Blockchain = Blockchain; 
-
-let bc = new Blockchain();
-
-// console.log("Mining block 1....");
-// bc.addBlock(new Block("24/1/2020", { amount : 10}));
-
-// console.log("Mining block 2....");
-// bc.addBlock(new Block("24/1/2020", { amount : 1}));
-
-// console.log(JSON.stringify(bc, null, 4));
-
-bc.createTransaction(new Transaction('address1', 'address2', 100));
-bc.createTransaction(new Transaction('address2', 'address1', 50));
-
-console.log("\n Starting the miner.....");
-bc.minePendingTransantions("sana-address");
-
-console.log("\n My balance is : ", bc.getBalanceOfAddress("sana-address"));
-
-console.log("\n Starting the miner again.....");
-bc.minePendingTransantions("sana-address");
-
-console.log("\n My balance is : ", bc.getBalanceOfAddress("sana-address"));
